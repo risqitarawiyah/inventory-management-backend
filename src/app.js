@@ -11,6 +11,9 @@ app.get("/", (req, res) => {
     res.send("Hello There!")
 })
 
+const authController = require("./auth/auth.controller");
+app.use("/api/auth", authController);
+
 app.listen(PORT, () => {
     console.log('App listening on port' + PORT)
 })
