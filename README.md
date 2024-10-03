@@ -57,7 +57,7 @@ Proyek ini adalah aplikasi backend untuk manajemen inventaris yang dibangun meng
     "message": "Registration Success!"
    } 
    ``` 
-3. Login Pengguna
+2. Login Pengguna
 
   - Metode: `POST`
    
@@ -82,7 +82,7 @@ Proyek ini adalah aplikasi backend untuk manajemen inventaris yang dibangun meng
        "message": "Login Success!"
      }
    
-4. Repositori Pengguna
+3. Repositori Pengguna
    
    Fungsi-fungsi untuk berinteraksi dengan data pengguna menggunakan Prisma.
 
