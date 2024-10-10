@@ -46,7 +46,7 @@ model Transaction {
   itemId Int
   quantityBorrowed Int
   borrowedAt DateTime @default(now())
-  returnedAt TransactionStatus
+  returnedAt DateTime? // Kolom untuk tanggal pengembalian, nullable
   status TransactionStatus
 
   user User @relation(fields: [userId], references: [id])
