@@ -350,7 +350,7 @@ Proyek ini juga dilengkapi dengan pengujian API menggunakan **Apidog**, yang mem
       "userId": 1
       }
       ```
-      Output (disini status sudah berubah menjadi RETURNED :
+      Output (disini status sudah berubah menjadi RETURNED) :
       ```
       {
         "id": 2,
