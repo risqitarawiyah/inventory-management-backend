@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const transactionService = require("./transaction.service");
+const authorizeJWT = require("../middleware/authorizeJWT");
+const adminAuthorization = require("../middleware/adminAuthorization");
 
 // Borrow Item
 
-router.post("/borrow", async (req, res) => {
+router.post("/borrow", authorizeJWT, async (req, res) => {
     try {
-        const { userId, itemId, quantityBorrowed } = req.body;
+        const userId = req.userId;
+        const { itemId, quantityBorrowed } = req.body;
         const newTransaction = await transactionService.borrowItem(userId, itemId, quantityBorrowed);
         res.status(201).json(newTransaction);
     } catch (error) {
@@ -16,7 +19,7 @@ router.post("/borrow", async (req, res) => {
 
 // Get All Transactions
 
-router.get("/", async (req, res) => {
+router.get("/", adminAuthorization, async (req, res) => {
     try {
         const transactions = await transactionService.getAllTransactions();
         res.send(transactions);
@@ -27,8 +30,8 @@ router.get("/", async (req, res) => {
 
 // Get Transactions by User ID
 
-router.get("/user", async (req, res) => {
-    const { userId } = req.body;
+router.get("/user", authorizeJWT, async (req, res) => {
+    const userId = req.userId;
     try {
         const transactions = await transactionService.getTransactionsByUserId(userId);
         res.status(200).send(transactions);
@@ -37,7 +40,7 @@ router.get("/user", async (req, res) => {
     }
 });
 
-router.patch("/verify/:transactionId", async (req, res) => {
+router.patch("/verify/:transactionId", adminAuthorization, async (req, res) => {
     try {
         const { transactionId } = req.params;
         const { status } = req.body;
@@ -48,10 +51,10 @@ router.patch("/verify/:transactionId", async (req, res) => {
     }
 });
 
-router.post("/return/:transactionId", async (req, res) => {
+router.post("/return/:transactionId", authorizeJWT, async (req, res) => {
     try {
         const { transactionId } = req.params;
-        const { userId } = req.body;
+        const userId = req.userId;
         const transaction = await transactionService.getTransactionById(transactionId);
         if (transaction.userId !== userId) {
             return res.status(403).json({ message: "Unauthorized" });
