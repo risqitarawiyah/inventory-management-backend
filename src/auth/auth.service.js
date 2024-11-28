@@ -3,8 +3,13 @@ const bcrypt = require ('bcrypt');
 const userRepository = require('./auth.repository');
 
 function generateToken(user) {
-    return jwt.sign({ userId: user.id, username: user.username, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+    try {
+        return jwt.sign({ userId: user.id, username: user.username, email: user.email, role: user.role }, 
+            process.env.JWT_SECRET, { expiresIn: '1h' });
+    } catch (error) {
+        console.log(error);
+        throw new Error('token error');
+    }
 }
 async function register(username, email, password){
     try {
@@ -19,7 +24,6 @@ async function register(username, email, password){
         return newUser;
     } catch (error) {
         throw new Error('Failed to register user');
-
     }
 }
 
