@@ -5,8 +5,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 const adminAuthorization = require('./middleware/adminAuthorization');
 
-const PORT = process.env.PORT;
-
 app.use(express.json());
 app.use(cors());
 
@@ -24,6 +22,4 @@ app.use("/api/items", itemController);
 app.use("/api/users", adminAuthorization, userController);
 app.use("/api/transactions", transactionController);
 
-app.listen(PORT, () => {
-    console.log('App listening on port' + PORT)
-})
+export default app;
